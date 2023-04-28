@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <title>卡拉什尼科夫纸牌游戏</title>
+</head>
+
+<body>
+    <section id="title_screen" class="screen text-center active">
+        <div class="container">
+
+            <h1>Kalashnikov the Card Game<br>AK47纸牌游戏</h1>
+            <section class="controls">
+                <button type="button" onclick="ak47_action_start()">开始新游戏</button>
+                <button type="button" onclick="addClass(document.getElementById('howto_screen'),'active');removeClass(document.getElementById('title_screen'),'active')">如何玩</button>
+            </section>
+            <footer>
+                <p>玩法作者：<a href="https://www.bilibili.com/video/BV1HE411R7wo/">鲍里斯的日常</a></p>
+                <p>受到<a href="https://www.bilibili.com/video/BV1Q7411g7Tn/">老鸽子Chrithon</a>制作的<a href="https://github.com/Chrithon/AK47">终端移植版</a>启发制作。</p>
+                <p>2023 Geticer <em>Stay Cheeki Breeki</em></p>
+            </footer>
+        </div>
+    </section>
+    <section id="howto_screen" class="screen">
+        <div class="container">
+            <h2 class="text-center">如何玩</h2>
+            <button type="button" onclick="addClass(document.getElementById('title_screen'),'active');removeClass(document.getElementById('howto_screen'),'active')">返回标题画面</button>
+            <h3>准备</h3>
+            <p>准备<strong>至少两名玩家</strong>和<strong>一副牌</strong>，去掉大小王（和别的没用的卡牌），只要52张牌，然后洗牌。</p>
+            <h3>开始</h3>
+            <p>将洗好的牌组给两名玩家各发4张，然后将其余的牌放在桌子中间。</p>
+            <blockquote>
+                <p>“我们就把这个当作‘垃圾堆’。这可不是一般的垃圾堆，这可是‘军用级’的垃圾！有装甲啊、花生米、军火的零部件、锈迹斑斑的金属品，和别的一堆毫无用处的破铜烂铁等等。”</p>
+            </blockquote>
+            <p>而游戏目标就是要从这堆“废铁”里凑出一把“AK47”。</p>
+            <blockquote>
+                <p>你可以这样理解：<em>A</em>是枪托，<em>K</em>是弹匣，<em>4</em>是子弹，<em>7</em>是其他用于组成枪的零件。</p>
+            </blockquote>
+            <p><strong>两个玩家要尽快凑出“AK47”，谁先凑出“AK47”谁先拿到分数。谁先拿到20分就赢。</strong></p>
+            <h3>换牌</h3>
+            <p>每一轮玩家都可以换走一张牌，必须随时都有四张牌在手上。</p>
+            <p>玩家先将自己不想要的牌丢弃（放进牌堆旁边的“废牌堆”里），然后在牌堆里拿一张新的。</p>
+            <p>拿完牌后，换另一名玩家换牌。千万记住<strong>别把有用的东西扔掉了</strong>。</p>
+            <h3>货架</h3>
+            <p>货架是玩家的共享空间。</p>
+            <p>有时玩家会有两个“可用部件”牌，此时就可以将多余的卡放在货架上，供其他玩家选用。<em>别忘了反面朝上放。</em></p>
+            <p>当货架上有卡牌的时候，玩家可以不从牌堆里拿牌，而是从货架上拿牌。</p>
+            <p>记住，如有需要的话，<strong>你随时可以把放在货架上的卡拿回来</strong>，前提是另一个人没拿走。</p>
+            <h3>凑出“AK47”之后</h3>
+            <p>当你凑出“AK47”之后，你可以把牌甩到桌子上，说道“<strong>KALASNIKOV CYKA!</strong>”，然后进入得分阶段。</p>
+            <p>有两种计算分数的方法：</p>
+            <h4>复杂的计分</h4>
+            <p>你可以从对手的手上拿走一张牌，你拿到的是多少，对方就扣掉多少分数。</p>
+            <p>比如，你抽到了2，然后对方把他/她的牌翻过来，而你抽到的2会跟对方手上的其他牌做对比，以便得出实际</p>
+            <p>的分数。</p>
+            <p>在这个游戏里面，A是最强的，然后是K，再然后是Q，以此类推，2是最弱的卡。参考：<code>强←A-K-Q-J-10-9-8-7-6-5-4-3-2→弱</code></p>
+            <p>比如对方的牌是“A J 7 2”，由于你抽到了2，所以你只会得到1分。如果你抽到第二弱的7，则是2分。以此类推。</p>
+            <p>如果在牌里面有多张重复的话，就取最高分数的。</p>
+            <p>比如对方手上有一张A跟三张2的话“A 2 2 2”，而你又很碰巧选到A的话，那分数是4，但如果你选到其中一张2的话，则分数必然是3。</p>
+            <p>再比如你有三张Q跟一张7“Q Q Q 7”，鉴于Q在这里最大，所以分数为4，而在这种情况之下，7则只有1分。</p>
+            <p>再比如“K 7 7 5”，这种情况K是最大的，分数为4，5是最低的，则只有1分；而中间的两张7均为3分。正如刚才提到，分数是以最大的那张为准的。</p>
+            <h4>简单的计分</h4>
+            <p>用六面骰子决定分数。</p>
+            <h3>黄金AK</h3>
+            <p>当组成“AK47”的牌是同一种花色的话，那这组牌就是“黄金AK”，一定能获得最多的分数，不仅如此，你还可以获得双倍分数！按照复杂得分规则，一定能获得8分数，按照简单得分规则，一定能获得12分数。也就是说，你有了“黄金AK”之后，都没必要再抽卡了。</p>
+            <hr>
+            <p>如果牌堆里的牌都被抽走了的话，那就只能从货架上面抽牌了。</p>
+            <p>如果所有的牌都打完了的话，则该局为平局（或作废），重新洗牌来过。</p>
+            <hr>
+            <p>以下内容可以在线下游戏中使用。<del>我因为懒，就没实现。</del></p>
+            <h3>特殊牌组</h3>
+            <ul>
+                <li>AK74：穿甲比AK47高，精度也比AK47高，所以获得的分数+1；</li>
+                <li>AK12：比AK47多了个刺刀，所以获得的分数+1；</li>
+                <li>2A82/2A46：125毫米坦克炮直接秒杀，凑出来之后直接获胜；</li>
+                <li>2A42/2A72：30毫米机炮直接秒杀，凑出来之后直接获胜；</li>
+            </ul>
+            <h3>特殊物品</h3>
+            <p>可以用大小王或者其他物件表示以下这几个物品，可以给游戏增加策略性和变化。</p>
+            <h4>瞄准镜</h4>
+            <p>可以让玩家查看牌堆顶部的三张牌并重新排列。当然，只对玩家自己可见，重排好之后也要反面朝上放回去。</p>
+            <h4>换弹匣</h4>
+            <p>交换手牌中的一张牌与牌堆中的一张牌。</p>
+            <h4>防弹衣</h4>
+            <p>在你的回合防止对方从你手中抽牌。在组装好AK47之后尤为有用。</p>
+            <h3>附加游戏结束条件</h3>
+            <p>为了让游戏更具紧张感，可以设置一个时间限制，例如在20分钟内谁得到20分。这将迫使玩家们加快游戏节奏，增加游戏的紧张氛围。</p>
+        </div>
+    </section>
+    <main id="game_screen" class="screen ">
+        <div class="container">
+            <header>
+                <div class="row">
+                    <div class="column">
+                        <h2>AK47</h2>
+                    </div>
+                    <div class="column">回合：<data id="round">0</data></div>
+                    <div class="column">玩家1：<data id="player1_hp">0</data></div>
+                    <div class="column">玩家2：<data id="player2_hp">0</data></div>
+                </div>
+            </header>
+            <div class="row">
+                <section id="player1" class="column">
+                    <h2>玩家1</h2>
+                    <ul class="deck">
+                        <li class="deck__card">
+                            <label for="player1_selected_card_0" class="deck__cardInner">
+                                <input type="radio" name="player1_selected_card" value="1" id="player1_selected_card_0">
+                                <em>♣</em>
+                                <b>1</b>
+                            </label>
+                        </li>
+                        <li class="deck__card">
+                            <label for="player1_selected_card_1" class="deck__cardInner">
+                                <input type="radio" name="player1_selected_card" value="2" id="player1_selected_card_1">
+                                <em>♣</em>
+                                <b>1</b>
+                            </label>
+                        </li>
+                        <li class="deck__card">
+                            <label for="player1_selected_card_2" class="deck__cardInner">
+                                <input type="radio" name="player1_selected_card" value="3" id="player1_selected_card_2">
+                                <em>♣</em>
+                                <b>1</b>
+                            </label>
+                        </li>
+                        <li class="deck__card">
+                            <label for="player1_selected_card_3" class="deck__cardInner">
+                                <input type="radio" name="player1_selected_card" value="4" id="player1_selected_card_3">
+                                <em>♣</em>
+                                <b>1</b>
+                            </label>
+                        </li>
+                    </ul>
+                    <section class="controls">
+                        <button type="button" onclick="ak47_action_dropAndGrabNewCardFromPile('player1')">丢弃选中的牌，并从牌堆里获取新的</button>
+                        <button type="button" onclick="ak47_action_dropAndGrabNewCardFromShelf('player1')">丢弃选中的牌，并从货架里获取新的</button>
+                        <button type="button" onclick="ak47_action_moveToShelfAndGrabNewCardFromPile('player1')">将选中的牌放进货架里，并从牌堆里获取新的</button>
+                        <button type="button" onclick="ak47_action_swapDeckAndShelf('player1')">互换选中的牌与货架里的牌</button>
+                        <button type="button" onclick="ak47_action_skip_round('player1')">跳过该回合</button>
+                    </section>
+                </section>
+                <section id="player2" class="column">
+                    <h2>玩家2</h2>
+                    <ul class="deck">
+                        <li class="deck__card">
+                            <label for="player2_selected_card_0" class="deck__cardInner">
+                                <input type="radio" name="player1_selected_card" value="1" id="player2_selected_card_0">
+                                <em>♣</em>
+                                <b>1</b>
+                            </label>
+                        </li>
+                        <li class="deck__card">
+                            <label for="player2_selected_card_1" class="deck__cardInner">
+                                <input type="radio" name="player1_selected_card" value="2" id="player2_selected_card_1">
+                                <em>♣</em>
+                                <b>1</b>
+                            </label>
+                        </li>
+                        <li class="deck__card">
+                            <label for="player2_selected_card_2" class="deck__cardInner">
+                                <input type="radio" name="player1_selected_card" value="3" id="player2_selected_card_2">
+                                <em>♣</em>
+                                <b>1</b>
+                            </label>
+                        </li>
+                        <li class="deck__card">
+                            <label for="player2_selected_card_3" class="deck__cardInner">
+                                <input type="radio" name="player1_selected_card" value="4" id="player2_selected_card_3">
+                                <em>♣</em>
+                                <b>1</b>
+                            </label>
+                        </li>
+                    </ul>
+                    <section class="controls">
+                        <button type="button" onclick="ak47_action_dropAndGrabNewCardFromPile('player2')">丢弃选中的牌，并从牌堆里获取新的</button>
+                        <button type="button" onclick="ak47_action_dropAndGrabNewCardFromShelf('player2')">丢弃选中的牌，并从货架里获取新的</button>
+                        <button type="button" onclick="ak47_action_moveToShelfAndGrabNewCardFromPile('player2')">将选中的牌放进货架里，并从牌堆里获取新的</button>
+                        <button type="button" onclick="ak47_action_swapDeckAndShelf('player2')">互换选中的牌与货架里的牌</button>
+                        <button type="button" onclick="ak47_action_skip_round('player2')">跳过该回合</button>
+                    </section>
+                </section>
+            </div>
+            <aside id="shelf">
+                <h3>货架</h3>
+                <ul class="deck">
+                </ul>
+            </aside>
+            <aside id="scrap" hidden>
+                <h2>牌堆</h2>
+            </aside>
+            <aside id="indicator" hidden>
+                <h2>状态</h2>
+            </aside>
+        </div>
+    </main>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="./assets/js/lazy.min.js"></script>
+    <script src="./assets/js/ak47.js"></script>
+</body>
+
+</html>

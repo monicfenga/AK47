@@ -1,0 +1,193 @@
+/* Gruvbox light, medium by Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox) */
+
+:root {
+    --base00: #fbf1c7;
+    --base01: #ebdbb2;
+    --base02: #d5c4a1;
+    --base03: #bdae93;
+    --base04: #665c54;
+    --base05: #504945;
+    --base06: #3c3836;
+    --base07: #282828;
+    --base08: #9d0006;
+    --base09: #af3a03;
+    --base0A: #b57614;
+    --base0B: #79740e;
+    --base0C: #427b58;
+    --base0D: #076678;
+    --base0E: #8f3f71;
+    --base0F: #d65d0e;
+}
+
+/* global */
+
+:root {
+    --primary: var(--base0E);
+}
+
+body {
+    background-color: var(--base00);
+    color: var(--base05);
+}
+
+::selection {
+    background-color: var(--base02);
+    color: var(--base06);
+}
+
+.text-center{
+    text-align: center;
+}
+
+a {
+    color: var(--primary);
+}
+
+.button,
+button,
+input[type='button'],
+input[type='reset'],
+input[type='submit'] {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--base00);
+}
+
+.button:focus,
+.button:hover,
+button:focus,
+button:hover,
+input[type='button']:focus,
+input[type='button']:hover,
+input[type='reset']:focus,
+input[type='reset']:hover,
+input[type='submit']:focus,
+input[type='submit']:hover {
+    background-color: var(--base07);
+    color: var(--base01);
+}
+
+/* main */
+
+.screen {
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--base00);
+    display: none;
+}
+
+#title_screen.active,
+#howto_screen.active,
+#game_screen.active {
+    display: block;
+}
+
+#title_screen .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+#game_screen header .row {
+    flex-direction: row;
+}
+
+.deck__card {
+    border: 1px solid var(--base01);
+    padding: .25rem;
+    border-radius: .5rem;
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 2px 4px var(--base01);
+    transition: all .2s ease-in-out;
+}
+
+.deck__card:hover,
+.deck__card:focus,
+.deck__card:focus-within,
+.deck__card:active {
+    box-shadow: 0 4px 8px var(--base01);
+}
+
+.deck__card:focus-within,
+.deck__card:active {
+    transform: translateY(-0.25em);
+}
+
+.deck__cardInner>input:checked~* {
+    color: var(--primary);
+    font-weight: bolder;
+}
+
+.deck {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.deck__card .deck__cardInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    font-size: 2em;
+}
+
+.deck__cardInner>input {
+    position: absolute;
+    top: -.25rem;
+    left: -.25rem;
+    margin: 0;
+}
+
+.deck__cardInner i {
+    font-size: 2em;
+}
+
+.deck__cardInner i,
+.deck__cardInner b {
+    line-height: 1.1;
+    font-style: normal;
+    font-weight: normal;
+}
+
+
+#shelf .deck__card {
+    background-color: var(--base07);
+    color: var(--base07);
+    user-select: none;
+}
+
+#shelf .deck__card input {
+    pointer-events: none;
+    display: none;
+}
+
+#shelf .deck__card .deck__cardInner {
+    font-size: 1em;
+ }
+
+ #game_screen #player1,
+ #game_screen #player2 {
+     display: none;
+ }
+
+ #game_screen.current-player1 #player1,
+ #game_screen.current-player2 #player2 {
+     display: block;
+ }
+
+
